@@ -25,5 +25,5 @@ export interface SignInDTO {
 export interface AuthResult {
   success: boolean;
   message?: string;
-  user?: User;
+  user?: User | null;
 }
