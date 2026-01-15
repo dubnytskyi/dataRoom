@@ -75,4 +75,17 @@ export const UI_TEXT = {
   ARIA_LABELS: {
     CLEAR_SEARCH: 'Clear search',
   },
+  TOOLTIPS: {
+    DRAG_TO_FOLDER: 'Drag items here to move them into this folder',
+    DRAG_TO_BREADCRUMB: 'Drag items here to move them to this location',
+  },
+  EMPTY_STATE: {
+    TITLE: 'This folder is empty',
+    UPLOAD_TITLE: 'Upload files',
+    UPLOAD_DESC: 'Drag PDF files from your computer anywhere on the page',
+    ORGANIZE_TITLE: 'Create folders',
+    ORGANIZE_DESC: 'Click "New Folder" to organize your documents',
+    MOVE_TITLE: 'Move items',
+    MOVE_DESC: 'Drag and drop items between folders or onto breadcrumbs',
+  },
 } as const;
