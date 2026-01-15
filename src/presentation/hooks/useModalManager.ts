@@ -50,24 +50,11 @@ export const useModalManager = () => {
     }
   };
 
-  const closeAllModals = () => {
-    setModals({
-      [ModalType.CREATE_FOLDER]: false,
-      [ModalType.RENAME]: false,
-      [ModalType.DELETE]: false,
-      [ModalType.MOVE_TO]: false,
-      [ModalType.PDF_PREVIEW]: false,
-    });
-    setSelectedItem(null);
-    setPreviewFile(null);
-  };
-
   return {
     modals,
     selectedItem,
     previewFile,
     openModal,
     closeModal,
-    closeAllModals,
   };
 };

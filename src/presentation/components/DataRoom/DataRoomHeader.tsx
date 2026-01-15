@@ -1,8 +1,8 @@
 import { useRef } from 'react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-import { Plus, Upload, ChevronRight, LogOut, User, Search, Filter, X } from 'lucide-react';
-import { BreadcrumbItem } from '../../../domain/types';
+import { Plus, Upload, ChevronRight, LogOut, User, Search, Filter, X, ArrowUpDown } from 'lucide-react';
+import { BreadcrumbItem, SortConfig, SortBy, SortOrder } from '../../../domain/types';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
+  DropdownMenuLabel,
 } from '../ui/dropdown-menu';
 import { useAuth } from '../../context/AuthContext';
 import { FilterType } from '../../hooks/useSearch';
@@ -29,6 +30,8 @@ interface DataRoomHeaderProps {
   onSearchChange: (query: string) => void;
   filterType: FilterType;
   onFilterChange: (filter: FilterType) => void;
+  sortConfig: SortConfig;
+  onSortChange: (config: SortConfig) => void;
 }
 
 export const DataRoomHeader = ({
@@ -44,6 +47,8 @@ export const DataRoomHeader = ({
   onSearchChange,
   filterType,
   onFilterChange,
+  sortConfig,
+  onSortChange,
 }: DataRoomHeaderProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { user, signOut } = useAuth();
@@ -154,6 +159,34 @@ export const DataRoomHeader = ({
                 <DropdownMenuRadioItem value={FilterType.ALL}>{UI_TEXT.FILTER.ALL}</DropdownMenuRadioItem>
                 <DropdownMenuRadioItem value={FilterType.FOLDERS}>{UI_TEXT.FILTER.FOLDERS_ONLY}</DropdownMenuRadioItem>
                 <DropdownMenuRadioItem value={FilterType.FILES}>{UI_TEXT.FILTER.FILES_ONLY}</DropdownMenuRadioItem>
+              </DropdownMenuRadioGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="icon" aria-label={UI_TEXT.SORT.LABEL}>
+                <ArrowUpDown className="w-4 h-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Sort By</DropdownMenuLabel>
+              <DropdownMenuRadioGroup
+                value={sortConfig.sortBy}
+                onValueChange={(value) => onSortChange({ ...sortConfig, sortBy: value as SortBy })}
+              >
+                <DropdownMenuRadioItem value={SortBy.NAME}>{UI_TEXT.SORT.BY_NAME}</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value={SortBy.DATE}>{UI_TEXT.SORT.BY_DATE}</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value={SortBy.SIZE}>{UI_TEXT.SORT.BY_SIZE}</DropdownMenuRadioItem>
+              </DropdownMenuRadioGroup>
+              <DropdownMenuSeparator />
+              <DropdownMenuLabel>Order</DropdownMenuLabel>
+              <DropdownMenuRadioGroup
+                value={sortConfig.sortOrder}
+                onValueChange={(value) => onSortChange({ ...sortConfig, sortOrder: value as SortOrder })}
+              >
+                <DropdownMenuRadioItem value={SortOrder.ASC}>{UI_TEXT.SORT.ORDER_ASC}</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value={SortOrder.DESC}>{UI_TEXT.SORT.ORDER_DESC}</DropdownMenuRadioItem>
               </DropdownMenuRadioGroup>
             </DropdownMenuContent>
           </DropdownMenu>

@@ -30,6 +30,8 @@ function App() {
     currentFolderId,
     loading,
     error,
+    sortConfig,
+    setSortConfig,
     createFolder,
     uploadFile,
     renameItem,
@@ -216,6 +218,8 @@ function App() {
           onSearchChange={setSearchQuery}
           filterType={filterType}
           onFilterChange={setFilterType}
+          sortConfig={sortConfig}
+          onSortChange={setSortConfig}
         />
 
         {/* Items Grid */}

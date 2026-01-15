@@ -377,7 +377,11 @@ If this were production:
 - **Audit Logs**: Track who accessed what and when
 - **Advanced Search**: Full-text search in PDF contents
 - **Mobile App**: React Native for iOS/Android
-- **E2E Tests**: Playwright for automated testing
+- **Automated Testing**:
+  - Unit Tests: Vitest + React Testing Library for components and hooks
+  - Integration Tests: Test service layer with repository mocks
+  - E2E Tests: Playwright for complete user flows (auth, CRUD, drag & drop)
+  - Visual Regression: Chromatic for UI consistency
 - **CI/CD**: GitHub Actions for automated deployments
 
 ## 📄 License

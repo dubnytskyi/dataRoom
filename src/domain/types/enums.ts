@@ -13,8 +13,3 @@ export enum SortOrder {
   ASC = 'asc',
   DESC = 'desc',
 }
-
-export enum ViewMode {
-  GRID = 'grid',
-  LIST = 'list',
-}

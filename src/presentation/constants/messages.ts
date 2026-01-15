@@ -64,6 +64,14 @@ export const UI_TEXT = {
     FOLDERS_ONLY: 'Folders Only',
     FILES_ONLY: 'Files Only',
   },
+  SORT: {
+    LABEL: 'Sort',
+    BY_NAME: 'Name',
+    BY_DATE: 'Date Modified',
+    BY_SIZE: 'Size',
+    ORDER_ASC: 'Ascending',
+    ORDER_DESC: 'Descending',
+  },
   ARIA_LABELS: {
     CLEAR_SEARCH: 'Clear search',
   },
