@@ -6,9 +6,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '../ui/tooltip';
 import { Folder, File, MoreVertical, Edit2, FolderInput, Download, Trash2 } from 'lucide-react';
 import { DataRoomItem, ItemType } from '../../../domain/types';
 import { formatFileSize, formatDate } from '../../../infrastructure/utils/fileUtils';
+import { UI_TEXT } from '../../constants/messages';
 
 interface DataRoomItemCardProps {
   item: DataRoomItem;
@@ -43,7 +50,7 @@ export const DataRoomItemCard = ({
   onDownload,
   onDelete,
 }: DataRoomItemCardProps) => {
-  return (
+  const cardContent = (
     <div
       draggable={!draggedItem || draggedItem.id === item.id}
       onDragStart={(e) => onDragStart(e, item)}
@@ -123,5 +130,20 @@ export const DataRoomItemCard = ({
         </DropdownMenu>
       </div>
     </div>
+  );
+
+  return item.type === ItemType.FOLDER ? (
+    <TooltipProvider>
+      <Tooltip delayDuration={300}>
+        <TooltipTrigger asChild>
+          {cardContent}
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>{UI_TEXT.TOOLTIPS.DRAG_TO_FOLDER}</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  ) : (
+    cardContent
   );
 };

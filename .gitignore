@@ -36,3 +36,9 @@ SETUP.md
 VIDEO_SCRIPT.md
 .claude/
 .vercel
+
+# Testing
+test-results/
+playwright-report/
+playwright/.cache/
+coverage/

@@ -13,6 +13,12 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuLabel,
 } from '../ui/dropdown-menu';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '../ui/tooltip';
 import { useAuth } from '../../context/AuthContext';
 import { FilterType } from '../../hooks/useSearch';
 import { UI_TEXT } from '../../constants/messages';
@@ -84,28 +90,37 @@ export const DataRoomHeader = ({
 
       {/* Breadcrumbs */}
       <div className="flex items-center gap-2 mb-6 flex-wrap">
-        {breadcrumbs.map((crumb, index) => {
-          const isDropTarget = breadcrumbDropTarget === (crumb.id === null ? 'root' : crumb.id);
+        <TooltipProvider>
+          {breadcrumbs.map((crumb, index) => {
+            const isDropTarget = breadcrumbDropTarget === (crumb.id === null ? 'root' : crumb.id);
 
-          return (
-            <div key={crumb.id || 'root'} className="flex items-center gap-2">
-              <button
-                onClick={() => onNavigate(crumb.id)}
-                onDragOver={(e) => onBreadcrumbDragOver(e, crumb.id)}
-                onDragLeave={onBreadcrumbDragLeave}
-                onDrop={(e) => onBreadcrumbDrop(e, crumb.id)}
-                className={`text-lg transition-all px-3 py-1.5 rounded-md ${
-                  isDropTarget
-                    ? 'bg-primary text-primary-foreground font-semibold scale-110 shadow-md'
-                    : 'hover:text-primary hover:bg-accent'
-                }`}
-              >
-                {crumb.name}
-              </button>
-              {index < breadcrumbs.length - 1 && <ChevronRight className="w-4 h-4 text-muted-foreground" />}
-            </div>
-          );
-        })}
+            return (
+              <div key={crumb.id || 'root'} className="flex items-center gap-2">
+                <Tooltip delayDuration={300}>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => onNavigate(crumb.id)}
+                      onDragOver={(e) => onBreadcrumbDragOver(e, crumb.id)}
+                      onDragLeave={onBreadcrumbDragLeave}
+                      onDrop={(e) => onBreadcrumbDrop(e, crumb.id)}
+                      className={`text-lg transition-all px-3 py-1.5 rounded-md ${
+                        isDropTarget
+                          ? 'bg-primary text-primary-foreground font-semibold scale-110 shadow-md'
+                          : 'hover:text-primary hover:bg-accent'
+                      }`}
+                    >
+                      {crumb.name}
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{UI_TEXT.TOOLTIPS.DRAG_TO_BREADCRUMB}</p>
+                  </TooltipContent>
+                </Tooltip>
+                {index < breadcrumbs.length - 1 && <ChevronRight className="w-4 h-4 text-muted-foreground" />}
+              </div>
+            );
+          })}
+        </TooltipProvider>
       </div>
 
       {/* Action Buttons and Search */}
