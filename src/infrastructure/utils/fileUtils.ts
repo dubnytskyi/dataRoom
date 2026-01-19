@@ -1,4 +1,5 @@
 import { ERROR_MESSAGES } from '../../presentation/constants/messages';
+import { TIME_THRESHOLDS } from '../constants/time';
 
 /**
  * Format file size to human-readable format
@@ -49,24 +50,24 @@ export function formatDate(timestamp: number): string {
   const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
 
   // Less than 1 minute
-  if (diffInSeconds < 60) {
+  if (diffInSeconds < TIME_THRESHOLDS.JUST_NOW) {
     return 'Just now';
   }
 
   // Less than 1 hour
-  if (diffInSeconds < 3600) {
+  if (diffInSeconds < TIME_THRESHOLDS.MINUTES) {
     const minutes = Math.floor(diffInSeconds / 60);
     return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
   }
 
   // Less than 1 day
-  if (diffInSeconds < 86400) {
+  if (diffInSeconds < TIME_THRESHOLDS.HOURS) {
     const hours = Math.floor(diffInSeconds / 3600);
     return `${hours} hour${hours > 1 ? 's' : ''} ago`;
   }
 
   // Less than 1 week
-  if (diffInSeconds < 604800) {
+  if (diffInSeconds < TIME_THRESHOLDS.DAYS) {
     const days = Math.floor(diffInSeconds / 86400);
     return `${days} day${days > 1 ? 's' : ''} ago`;
   }

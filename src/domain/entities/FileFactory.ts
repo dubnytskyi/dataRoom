@@ -1,9 +1,5 @@
 import { FileItem, ItemType, UploadFileDTO } from '../types';
-
-const MAX_NAME_LENGTH = 255;
-const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
-const ALLOWED_MIME_TYPES = ['application/pdf'];
-const INVALID_CHARS_REGEX = /[<>:"/\\|?*\x00-\x1F]/g;
+import { VALIDATION } from '../constants/validation';
 
 /**
  * Factory for creating File entities
@@ -37,9 +33,9 @@ export class FileFactory {
    */
   private static sanitizeName(name: string): string {
     return name
-      .replace(INVALID_CHARS_REGEX, '')
+      .replace(VALIDATION.INVALID_CHARS_REGEX, '')
       .trim()
-      .substring(0, MAX_NAME_LENGTH);
+      .substring(0, VALIDATION.MAX_NAME_LENGTH);
   }
 
   /**
@@ -50,8 +46,8 @@ export class FileFactory {
       throw new Error('File name cannot be empty');
     }
 
-    if (name.length > MAX_NAME_LENGTH) {
-      throw new Error(`File name cannot exceed ${MAX_NAME_LENGTH} characters`);
+    if (name.length > VALIDATION.MAX_NAME_LENGTH) {
+      throw new Error(`File name cannot exceed ${VALIDATION.MAX_NAME_LENGTH} characters`);
     }
   }
 
@@ -59,7 +55,7 @@ export class FileFactory {
    * Validate MIME type
    */
   private static validateMimeType(mimeType: string): void {
-    if (!ALLOWED_MIME_TYPES.includes(mimeType)) {
+    if (!VALIDATION.ALLOWED_MIME_TYPES.includes(mimeType as any)) {
       throw new Error(`Only PDF files are allowed. Received: ${mimeType}`);
     }
   }
@@ -72,9 +68,9 @@ export class FileFactory {
       throw new Error('File size must be greater than 0');
     }
 
-    if (size > MAX_FILE_SIZE) {
+    if (size > VALIDATION.MAX_FILE_SIZE) {
       throw new Error(
-        `File size cannot exceed ${MAX_FILE_SIZE / 1024 / 1024}MB. Received: ${
+        `File size cannot exceed ${VALIDATION.MAX_FILE_SIZE / 1024 / 1024}MB. Received: ${
           size / 1024 / 1024
         }MB`
       );

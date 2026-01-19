@@ -1,7 +1,5 @@
 import { Folder, ItemType, CreateFolderDTO } from '../types';
-
-const MAX_NAME_LENGTH = 255;
-const INVALID_CHARS_REGEX = /[<>:"/\\|?*\x00-\x1F]/g;
+import { VALIDATION } from '../constants/validation';
 
 /**
  * Factory for creating Folder entities
@@ -30,9 +28,9 @@ export class FolderFactory {
    */
   private static sanitizeName(name: string): string {
     return name
-      .replace(INVALID_CHARS_REGEX, '')
+      .replace(VALIDATION.INVALID_CHARS_REGEX, '')
       .trim()
-      .substring(0, MAX_NAME_LENGTH);
+      .substring(0, VALIDATION.MAX_NAME_LENGTH);
   }
 
   /**
@@ -43,8 +41,8 @@ export class FolderFactory {
       throw new Error('Folder name cannot be empty');
     }
 
-    if (name.length > MAX_NAME_LENGTH) {
-      throw new Error(`Folder name cannot exceed ${MAX_NAME_LENGTH} characters`);
+    if (name.length > VALIDATION.MAX_NAME_LENGTH) {
+      throw new Error(`Folder name cannot exceed ${VALIDATION.MAX_NAME_LENGTH} characters`);
     }
   }
 }
